@@ -1,0 +1,30 @@
+to find duplicates
+select col1,col2 ,count(*) from tablename group by col1,col2 having 
+count(*)>1
+select count(*)-count(columname)  as null_values from tablename
+select*from tablename where employeeid%2=0
+select*from tablename where employeeid%2=1
+select*into newtable from oldtable
+    Write a query to find the top 3 students in every course scoring the highest marks
+select top 3* from table name where max(marks) group by course
+source 100
+target 150 
+select* from source as a inner join target  as b on a.id=b.id
+(select*from source except select*from target) union all
+(select*from target except select*from source)
+Write a function that takes two numbers
+ of type string and calculates the sum.
+
+a=int(input('enter first number here:')
+b=int(inpuut('enter second number here:')
+c=a+b
+print=('the sum of given two numbers is',c)
+
+What will be the output of the code below?
+list = [‘alfa’, ‘bravo’, ‘charlie’, ‘delta’. ‘echo’]
+
+print list[10:]
+
+
+
+

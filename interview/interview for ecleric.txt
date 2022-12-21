@@ -1,0 +1,35 @@
+table 1 : 1 1 1 0 0 null
+table 2:  0 1 1 1 null null 
+inner join:   11 
+left outer join: 12
+right outer join : 13
+full outer join::14
+cross join: 36
+
+--id uid date pid qut
+there is table including following columns how will you
+find the customers who are visiting shops more than one day
+
+select t.id ,userid t.date pid quantity count(*) as frequnt from table name
+group by col1,col2,col3 having count(*)>1
+
+select *, count (date) group by (userId) having count(dist(date))>1
+
+
+----
+Col1 col2 col3
+4        5       8
+1        2       3
+7        6       9
+
+write a query to find smallest number from above table
+
+select  min(col1), 
+select min(col2),
+select 
+min(col3)  
+union 
+as minimum from table name  
+where minimum in(0-1)
+
+                

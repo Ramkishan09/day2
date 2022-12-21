@@ -1,0 +1,312 @@
+---self join 
+
+select e1.first_name,e2.first_name from employees e1 left outer join 
+employees e2 on e1.manager_id=e2.employee_id
+
+select * from employees e1 join employees e2 on e1.manager_id=e2.employee_id
+
+select e1.first_name,e2.first_name from employees e1 join employees e2 on e1.manager_id=e2.employee_id
+
+select e1.first_name,e2.first_name,e1.salary,e2.salary 
+from employees e1 join employees e2 on e1.manager_id=e2.employee_id
+
+select e1.first_name,e2.first_name,e1.salary,e2.salary 
+from employees e1 join employees e2 on e1.manager_id=e2.employee_id
+where e1.salary>e2.salary
+
+select * from employees 
+
+---employee joined on particular date 
+
+select * from employees where hire_date='1991-05-21' 
+
+select * from employees where hire_date<'1991-05-21'
+
+select * from employees where hire_date>'1991-05-21'
+
+select * from employees where hire_date between '1991-05-21' and '1994-08-17'
+
+-----employee name with joining year
+
+----first_name and joining year with. 
+select first_name,YEAR(hire_date) from employees 
+
+---can you diplay employees who joined in 1993.
+
+select first_name,YEAR(hire_date) from employees where YEAR(hire_date)=1993
+
+---can you diplay employees who joined in MAY.
+
+select first_name,Month(hire_date) from employees where Month(hire_date)=5
+
+---can you diplay count of employees who joined in Year wise and month wise.
+
+select count(*),YEAR(hire_date) from employees group by YEAR(hire_date)
+
+select count(*),Month(hire_date) from employees group by Month(hire_date)
+
+select count(*) ,YEAR(hire_date) year ,Month(hire_date) month from employees 
+group by YEAR(hire_date),Month(hire_date)
+order by YEAR(hire_date),Month(hire_date)
+
+----2nd max salary wale kr pure details
+
+select * from employees where salary in
+(select max(salary) from employees where salary<(select max(salary) from employees))
+
+---2nd ,27th highest salary or 27th lowest salary also 3,9,11 max salary
+
+select * from (
+select *,DENSE_RANK() over (order by salary desc) as rnk from employees) temp
+where rnk =25
+
+select * from (
+select employees.*,DENSE_RANK() over (order by salary desc) as rnk from employees) temp
+where rnk in (3,5,6)
+
+---rank se nahi hota
+
+select employees.*,RANK() over (order by salary desc) as rnk from employees
+
+---2nd ,27th lowest salary or 27th lowest salary also 3,9,11 max salary
+
+select * from (
+select employees.*,DENSE_RANK() over (order by salary) as rnk from employees) temp
+where rnk =1
+
+---rank se nahi hota
+select employees.*,RANK() over (order by salary) as rnk from employees
+
+select min(salary) from employees
+
+------deprtment wise max/avg salary 
+
+select * from employees
+
+select * from departments
+
+select department_id,max(salary) as count_employees from employees group by department_id
+
+select department_id,avg(salary) as count_employees from employees group by department_id
+
+select department_id,min(salary) as count_employees from employees group by department_id
+
+select department_id,count(*) as count_employees from employees group by department_id
+
+---Partition by---
+
+create table emp (ename varchar(20),esalary int,Gender varchar(20))
+
+insert into emp values ('Amit',150000,'Male')
+insert into emp values ('Snehal',90000,'Female')
+insert into emp values ('Rishi',100000,'Male')
+insert into emp values ('Rani', 50000,'Female')
+insert into emp values ('Pratik',75000,'Male')
+insert into emp values ('Aditi',55000,'Female')
+insert into emp values ('Sneha',90000,'Female')
+
+select * from emp order by Gender 
+
+--select Gender,avg(esalary) avg_sal from emp group by Gender
+
+select *,avg(esalary) over (partition by Gender ) avg_sal from emp order by esalary desc
+
+select *,avg(esalary) over (partition by Gender order by Gender) avg_sal from emp 
+
+--Lets take an example
+
+select Gender,max(esalary) from emp group by Gender
+
+select Gender,max(esalary) from emp group by Gender
+
+--can not use DENSE_RANK() directly with group by
+
+Select max(esalary), gender from emp group by gender order by max(esalary) desc 
+
+select * from emp where esalary in (select max(esalary) from emp group by gender)
+
+--select DENSE_RANK() over (order by esalary desc) from emp group by Gender
+
+select * from 
+(select *,DENSE_RANK() over (partition by gender order by esalary desc) as rnk from emp)temp
+where rnk=1
+
+----display all info of employees with max salary department wise 
+
+---select count(*) cnt ,department_id from employees group by department_id
+
+select * from employees
+
+select * from Products
+
+create table Products(pid decimal,pname varchar(20),Sales_amount int)
+
+select * from Products
+
+select pname,sum(Sales_amount) Sales_amount from Products group by pname
+
+select pid,pname,sum(Sales_amount) over (partition by pname order by pname)  
+Sales_amount from Products 
+
+insert into Products values(101,'Lap',80000)
+insert into Products values(102,'Mob',60000)
+insert into Products values(103,'Lap',50000)
+insert into Products values(104,'Mob',40000)
+insert into Products values(105,'PD',2500)
+
+----display all info of employees with max salary department wise 
+---take example in oracle 
+
+--on view created 
+
+----recent record  
+
+create table employee (eid int,ename varchar(20),esalary int)
+
+drop table employee 
+
+insert into employee values (100,'Amit',50000);
+
+insert into  employee values (100,'Amit',60000);
+
+insert into  employee values (100,'Amit',70000);
+
+insert into  employee values (100,'Amit',80000);
+
+select * from employee
+
+insert into  employee values (101,'Ram',55000)
+
+insert into  employee values (101,'Ram',65000)
+
+insert into  employee values (101,'Ram',75000,'Pune')
+insert into  employee values (101,'Ram',55000,'UK')
+
+
+select eid,ename,max(esalary) from employee  group by ename,eid order by max(esalary) desc
+
+select * from employee where esalary in (select max(esalary) from employee group by ename)
+
+select * from employee 
+
+alter table employee add city varchar(20)
+
+update employee
+set city ='Akola'
+where ename='Ram' and esalary=65000
+
+
+----go for oracle how to find duplicate records with the help of rowid 
+
+-----example of case statement/decode in oracle-----
+
+select * from employees where crnt_flag='Y'
+
+----display all info of employees with max salary department wise 
+
+select * from employees join departments 
+on employees.department_id=departments.department_id
+
+select count(*) count_employees,department_name from employees join departments 
+on employees.department_id=departments.department_id
+group by department_name
+order by count_employees desc
+
+select max(salary) max_salary,department_name from employees join departments 
+on employees.department_id=departments.department_id
+group by department_name
+order by max_salary desc
+
+select * from (select max(salary) max_salary,department_name from employees join departments 
+on employees.department_id=departments.department_id
+group by department_name
+order by max_salary desc) temp
+
+select * from departments
+
+
+create table loc (City varchar2(10))
+ 
+insert into loc values('Mumbai')
+insert into loc values('Nagpur')
+insert into loc values('Satara')
+insert into loc values('Akola')
+
+select * from loc
+
+select loc.*,decode(City,'Mumbai','Mum','Nagpur','Nag','Satara','Sat','Akola','Ako') from loc
+
+select city,case when city='Mumbai' then 'Mum' 
+            when city='Nagpur' then 'Nag'
+            when city='Satara' then 'Sat'
+            when city='Akola' then 'Ako'
+            end as short_name
+            from loc
+            
+---nvl
+
+select * from employees
+
+select COMMISSION_PCT,nvl(COMMISSION_PCT,0.25) from employees
+
+----Most recent records with rowid
+
+select employee.*,rowid from employee
+
+select * from employee
+
+select employee.*,rowid from employee where rowid in 
+(select max(rowid) from employee group by eid)  
+
+insert into  employee values (101,'Ram',90000)
+
+update employee
+
+---views
+
+create view depts123 as (select * from employees where JOB_ID='IT_PROG' and salary=30000)
+
+CREATE PROCEDURE depts1234 @JOB_ID VARCHAR2(10), @SALARY NUMBER(8,2)
+AS
+SELECT * FROM employees WHERE salary = @salary AND salary = @salary
+GO;
+
+--drop VIEW depts123;
+
+select * from depts1234
+
+EXEC depts1234 
+
+select * from SelectAllCustomers @salary = 20000;
+
+select employees.* from employees 
+
+select parellel */8 EMPLOYEE_ID, FIRST_NAME, LAST_NAME, EMAIL, PHONE_NUMBER, HIRE_DATE, 
+JOB_ID, SALARY, COMMISSION_PCT, MANAGER_ID, DEPARTMENT_ID
+from employees
+
+--parellel */8
+
+insert into  employee values (101,'Ram',75000,'Pune')
+
+create view depts as (select es.employee_id	,es.first_name	
+,es.last_name,	es.email,	es.phone_number,	es.hire_date	
+,es.job_id	,es.salary	,es.manager_id
+,ds.department_name from employees es  join departments ds
+on es.department_id=ds.department_id)
+
+select count(*),DEPARTMENT_NAME from depts group by DEPARTMENT_NAME
+
+create view depts as (select es.employee_id	,es.first_name	
+,es.last_name,	es.email,	es.phone_number,	es.hire_date	
+,es.job_id	,es.salary	,es.manager_id
+,ds.department_name from employees es  join departments ds
+on es.department_id=ds.department_id)
+
+select depts.*,DENSE_RANK() over (order by )
+
+
+
+
+
+

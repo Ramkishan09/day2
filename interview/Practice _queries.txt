@@ -1,0 +1,379 @@
+select * from table5
+
+select * from table6
+
+select * from table5
+inner join table6 on 
+table5.column1=table6.column1
+
+select * from table5
+left outer join table6 on 
+table5.column1=table6.column1
+
+select * from table5
+right outer join table6 on 
+table6.column1=table5.column1
+
+select * from table5
+full outer join table6 on 
+table5.column1=table6.column1
+
+select * from table3
+cross join table4
+
+select * from table5
+union
+select * from table6
+
+select * from table5
+union all 
+select * from table6
+
+select * from table5
+intersect 
+select * from table6
+
+select * from table5
+except  
+select * from table6
+
+select * from table6
+except  
+select * from table5
+
+select * from table3
+full outer join  table4 
+on table3.column1=table4.column1
+where table3.column1 is null 
+
+
+create table table7(column1 int)
+
+insert into table7 values (-4)
+
+
+
+insert into table6 values (1)
+insert into table6 values (null)
+insert into table6 values (null)
+
+
+select * from table5
+full outer join 
+table4 on table3.column1=table4.column1
+
+select * from table3
+union
+select * from table4 
+
+select * from table3
+union all
+select * from table4 
+
+select * from table3
+except
+select * from table4 
+
+select * from table4
+except
+select * from table3
+
+
+create table table2(column1 int)
+
+insert into table2 values (1)
+
+select * from table2
+
+select * from table1 join table2 on table1.column1=table2.column1
+
+select * from table1 join table2 on table1.column1=table2.column1
+
+select * from table1 join table2 on table1.column1=table2.column1
+
+select * from table1 join table2 on table1.column1=table2.column1
+
+select * from table1 join table2 on table1.column1=table2.column1
+
+select * from table1 
+union 
+select * from table2
+
+
+select * from table1 
+union all
+select * from table2
+
+select * from table1 
+intersect
+select * from table2
+
+select * from table1
+except
+select * from table2
+
+select * from table1
+except
+select * from table2
+
+----Set oparator 
+
+----Another example in employees_hr
+---also display records which are in table A and not in table b 
+
+---Display records in table3 and table4
+
+select * from table1
+except
+select * from table2
+
+select * from table1
+except
+select * from table2
+
+select * from table1
+except
+select * from table2
+
+select * from table5
+join table6 on table5.column1=table6.column1
+
+select * from table5
+left join table6 on table5.column1=table6.column1
+
+select * from table5
+right join table6 on table5.column1=table6.column1
+
+select * from table5
+full outer join table6 on table5.column1=table6.column1
+
+select * from table5
+union
+select * from table2
+
+select * from table5
+union all
+select * from table2
+
+select * from table5
+except
+select * from table6
+
+select * from table6
+except
+select * from table5
+
+
+select * from table5
+union all
+select * from table6
+
+select * from table5
+right join table6 on table5.column1=table6.column1
+
+-----case statments
+---display only positive records
+
+select * from table7
+
+---display only positive records
+
+select case when column1>0 then column1 else null end from table7
+
+---display only negative records
+
+select case when column1<0 then column1 end from table7
+
+---display only 0 records
+
+select case when column1=0 then column1 end from table7
+
+---display all records differrnt columns
+
+select (case when column1>0 then column1 end) positive_value,
+(case when column1<0 then column1 end) negative_value,
+(case when column1=0 then column1 end) zero_value  from table7
+
+------sum of positive and negative value 
+
+select sum(case when column1>0 then column1 else 0 end) positive_value,
+sum(case when column1<0 then column1 else 0 end  ) negative_value,
+sum(case when column1=0 then column1 else 0 end )zero_value  from table7
+
+-----copy table structure 
+
+SELECT * INTO table8 FROM table7 where 1=2
+
+
+drop table table8
+
+select * from table8
+
+select * from table7
+
+select * from table8
+
+SELECT * INTO table9 FROM table7 where 1=2
+
+select * from table9
+
+----display table structure
+
+select * from INFORMATION_SCHEMA.tables
+
+select * from INFORMATION_SCHEMA.COLUMNS  --where table_name='employees'
+
+sp_help employees
+
+----count(*),count(column_name)
+
+select * from employees
+
+select count(*) from employees
+
+select count(phone_number) from employees
+
+select count(*) - count(phone_number), from employees
+
+
+select * from employees --where phone_number is null or email is null 
+
+select count(*) - count(email) from employees
+
+----Join 5 tables 
+
+select * from employees
+
+select * from departments
+
+select * from locations
+
+select * from countries
+
+select * from regions 
+
+---1)first name display dept name 
+
+select first_name,department_name from employees 
+join departments on employees.department_id=departments.department_id
+
+
+
+--2)first name display ,dept name , city 
+
+select first_name,department_name ,city from employees 
+join departments on employees.department_id=departments.department_id join 
+locations on departments.location_id=locations.location_id
+
+
+--3)country_name
+
+select first_name,department_name ,city,country_name,region_name from employees 
+join departments on employees.department_id=departments.department_id join 
+locations on departments.location_id=locations.location_id 
+join countries on locations.country_id=countries.country_id
+join regions on countries.region_id=regions.region_id
+
+
+
+--4)region_name
+
+select first_name,department_name ,city,country_name,region_name from employees 
+join departments on employees.department_id=departments.department_id join 
+locations on departments.location_id=locations.location_id 
+join countries on locations.country_id=countries.country_id
+join regions on countries.region_id=regions.region_id
+
+
+
+---------split based on special charachter 
+
+select * from employees
+
+select email,SUBSTRING(email,1,6) from employees
+
+select email,SUBSTRING(email,1,CHARINDEX('@',email,1)-1) as name ,SUBSTRING(email,CHARINDEX('@',email,1)+1,LEN(email)) as domain from employees
+
+select email,CHARINDEX('@',email,1) from employees
+
+
+----------experience of employees 
+
+select * from employees
+
+select hire_date,getdate(),DATEDIFF(MM,hire_date,getdate()) exp_months from employees
+
+select hire_date,getdate(),DATEDIFF(DD,hire_date,getdate()) exp_years from employees
+
+select hire_date,getdate(),DATEDIFF(YYYY,hire_date,getdate()) exp_years from employees
+
+
+---self join 
+
+select * from employees e1 join employees e2 on e1.manager_id=e2.employee_id
+
+select e1.first_name,e2.first_name from employees e1 join employees e2 on e1.manager_id=e2.employee_id
+
+select e1.first_name,e2.first_name,e1.salary,e2.salary from employees e1 join employees e2 on e1.manager_id=e2.employee_id
+
+select e1.first_name,e2.first_name,e1.salary,e2.salary from employees e1 join employees e2 on e1.manager_id=e2.employee_id
+where e1.salary<e2.salary
+
+
+---joined on particular date 
+
+select
+
+------deprtment wise max/avg salary 
+
+select * from employees
+
+select department_id,max(salary) as count_employees from employees group by department_id
+
+select department_id,avg(salary) as count_employees from employees group by department_id
+
+select department_id,min(salary) as count_employees from employees group by department_id
+
+----display all info of employees with max salary
+
+select * from employees where salary in 
+(select max(salary) as count_employees from employees group by department_id)
+
+---partition by 
+
+select count(*),employee_id from employees group by employee_id
+
+
+
+----duplicate records 
+
+create table employee (eid varchar ,ename varchar,esalary varchar)
+
+drop table employee 
+
+insert into employee values (100,'Amit',50000)
+
+insert into  employee values ('100','Amit','60000')
+
+insert into  employee values ('100','Amit','70000')
+
+insert into  employee values ('100','Amit','80000')
+
+select * from employee
+
+
+insert into  employee values (101,'Ram',55000)
+
+insert into  employee values (101,'Ram',65000)
+
+insert into  employee values (101,'Ram',75000)
+
+insert into  employee values (101,'Ram',85000)
+
+
+----go for oracle how to find duplicate records with the help of rowid 
+
+-----example of case statement-----
+
+select * from employees 
+

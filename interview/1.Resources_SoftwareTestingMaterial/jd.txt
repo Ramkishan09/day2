@@ -1,0 +1,13 @@
+           JD for your reference.
+ 
+•	3+ years of experience as QA with Data Lake, Data migration, validation experience.
+•	Create/Design/Execute the test plans and test cases, test data transfers
+•	Strong knowledge in Data/ETL and reports testing. Must have any ETL tool basic knowledge.
+•	Prefer experience working in one or more of Azure data factory, databricks in combination with PySpark, SparkSQL.
+•	In-depth understanding of data management (e. g. permissions, security, and monitoring).
+•	Must have test management tools knowledge ( eg., Azure DevOps, JIRA)
+•	Excellent SQL, PySpark SQL queries.
+•	Excellent analytical, written and verbal communication skills.
+•	Effective working in a team as well as working independently.
+30 to 35 % hike
+linkden profile is must

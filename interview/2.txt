@@ -1,0 +1,33 @@
+select substring(columnname,startpoint,enedpoint) from tablename
+where having
+
+employees empid  empname  
+           1       x
+           2        y
+            3       Z
+
+empdetails  empid     address
+             1         addr1
+              2         addr2
+              1          addr3
+              2          addr4
+              3          addr5
+select a.empid,b.address from employees as a inner join employeedetails
+as b on a.empid=b.empid where in(select empid,address from empdeatils
+gruop by address having count(*)>1)
+
+
+
+employee duplicates records
+
+a minus b-------non matching from b
+a intersect b it will matching records
+nvl
+group by order by select where from having
+select from where group by having order by 
+lead(col,1) from table 
+lag(clo1,1) from table
+awk -n filename
+ls-l
+grep -i 
+sed  
