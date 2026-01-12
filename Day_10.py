@@ -1,0 +1,22 @@
+ls=[1,2.0,True,1+2j,'String']
+print("List values",ls)
+print("type of ls is",type(ls))
+print("Memory of ls is ", id(ls))
+print("The first element in ls is ",ls[0],type(ls[0]),id(ls[0]))
+print("The Second element in ls is ",ls[1],type(ls[1]),id(ls[0]))
+print("The Third element in ls is ",ls[2],type(ls[2]),id(ls[0]))
+print("The Fourth element in ls is ",ls[3],type(ls[3]),id(ls[0]))
+print("The Fifth element in ls is ",ls[4],type(ls[4]),id(ls[0]))
+
+ls2=[]
+print("List values",ls2)
+print("type of ls is",type(ls2))
+print("Memory of ls is ", id(ls2))
+ls2.append(5)
+print("List values after append",ls2)
+ls2.insert(1,4)
+print("List values after insert it needs two input,first is index and second is values ",ls2)
+ls2.extend([1,2,3,4,5,6])
+print("List values after extend ",ls2)
+ls2.count(4)
+print("List values after count ",ls2.count(4))
